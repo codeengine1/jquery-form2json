@@ -12,7 +12,7 @@ jQuery plugin to marshal a form to JSON representation
         jQuery(document).ready(function ($) {
             $('[data-customer-form]').on('submit', function (e) {
                 e.preventDefault();
-                var json = $(this).formToJson({pretty: true});
+                var json = $(this).formToJson({pretty: true, delimiter: '.'});
                 console.log(json);
             });
         });
@@ -35,4 +35,17 @@ jQuery plugin to marshal a form to JSON representation
     
         <input type="submit" value="SUBMIT" />
     </form>
+```
+
+### Which will produce:
+```json
+{
+  "customerId": "1",
+  "firstName": "David",
+  "lastName": "Maple",
+  "address": {
+    "street": "123 West Main St.",
+    "city": "Newtown",
+  }
+}
 ```
