@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Form</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, SansSerif;
+            text-align: center;
+        }
+
+        form {
+            display: inline-block;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: auto;
+            text-align: left;
+        }
+
+        label, input[type=submit], input[type=checkbox] {
+            display: block;
+            margin-top: 1rem;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="form2json.js"></script>
+
+    <!-- Example Implementation -->
+    <script>
+        jQuery(document).ready(function ($) {
+            $('[data-customer-form]').on('submit', function (e) {
+                e.preventDefault();
+
+                // note: turn off pretty printing in production
+                var json = $(this).formToJson({pretty: true});
+                console.log(json);
+            });
+        });
+    </script>
+</head>
+<body>
+<form method="POST" action="/rest/service/customer" data-customer-form>
+    <input type="hidden" name="customerId" value="1"/>
+
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" value="David"/>
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" value="Maple"/>
+
+    <label for="gender">Gender (Select one or both):</label>
+    <select id="gender" name="gender" multiple>
+        <option value="MALE">Male</option>
+        <option value="FEMALE">Female</option>
+    </select>
+
+    <label for="preferredBrowser">Favorite Browser:</label>
+    <input type="text" list="browsers" id="preferredBrowser" name="preferredBrowser">
+    <datalist id="browsers">
+        <option value="Internet Explorer">
+        <option value="Firefox">
+        <option value="Chrome">
+        <option value="Opera">
+        <option value="Safari">
+    </datalist>
+
+    <label for="isBilling">Billing</label>
+    <input type="radio" id="isBilling" name="address.type" value="billing" />
+
+    <label for="isShipping">Shipping</label>
+    <input type="radio" id="isShipping" name="address.type" value="shipping" />
+
+    <label for="streetAddress">Street Address:</label>
+    <input type="text" id="streetAddress" name="address.street" value="123 West Main St."/>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="address.city" value="Newtown"/>
+
+    <label for="state">State:</label>
+    <select id="state" name="address.state">
+        <option value="">&nbsp;</option>
+        <option value="AK">AK</option>
+        <option value="AL">AL</option>
+        <option value="AR">AR</option>
+        <option value="AZ">AZ</option>
+        <option value="CA">CA</option>
+        <option value="CO">CO</option>
+        <option value="CT">CT</option>
+        <option value="DC">DC</option>
+        <option value="DE">DE</option>
+        <option value="FL">FL</option>
+        <option value="GA">GA</option>
+        <option value="HI">HI</option>
+        <option value="IA">IA</option>
+        <option value="ID">ID</option>
+        <option value="IL">IL</option>
+        <option value="IN">IN</option>
+        <option value="KS">KS</option>
+        <option value="KY">KY</option>
+        <option value="LA">LA</option>
+        <option value="MA">MA</option>
+        <option value="MD">MD</option>
+        <option value="ME">ME</option>
+        <option value="MI">MI</option>
+        <option value="MN">MN</option>
+        <option value="MO">MO</option>
+        <option value="MS">MS</option>
+        <option value="MT">MT</option>
+        <option value="NC">NC</option>
+        <option value="ND">ND</option>
+        <option value="NE">NE</option>
+        <option value="NH">NH</option>
+        <option value="NJ">NJ</option>
+        <option value="NM">NM</option>
+        <option value="NV">NV</option>
+        <option value="NY">NY</option>
+        <option value="OH">OH</option>
+        <option value="OK">OK</option>
+        <option value="OR">OR</option>
+        <option value="PA">PA</option>
+        <option value="PR">PR</option>
+        <option value="RI">RI</option>
+        <option value="SC">SC</option>
+        <option value="SD">SD</option>
+        <option value="TN">TN</option>
+        <option value="TX">TX</option>
+        <option value="UT">UT</option>
+        <option value="VA">VA</option>
+        <option value="VI">VI</option>
+        <option value="VT">VT</option>
+        <option value="WA">WA</option>
+        <option value="WI">WI</option>
+        <option value="WV">WV</option>
+        <option value="WY">WY</option>
+    </select>
+
+    <label for="notes">Notes:</label>
+    <textarea id="notes" name="notes"></textarea>
+
+    <input type="checkbox" id="terms" name="legal.terms" value="1" />
+    <label for="terms">I agree that this form is a sample and has no real world value</label>
+
+    <input type="submit" value="SUBMIT" />
+
+</form>
+</body>
+</html>
