@@ -45,7 +45,7 @@ jQuery plugin to marshal a form to JSON representation
   "lastName": "Maple",
   "address": {
     "street": "123 West Main St.",
-    "city": "Newtown",
+    "city": "Newtown"
   }
 }
 ```
