@@ -4,7 +4,7 @@
      *
      * @type {{delimited: strategies.delimited, array: strategies.array}}
      */
-    var strategies = {
+    var syntaxes = {
         /**
          * Example: name="address.street"
          *
@@ -57,7 +57,7 @@
         var $form = this;
         var opts = $.extend({}, $.fn.formToObject.defaults, options);
         var delimiter = opts.delimiter;
-        var strategy = opts.strategy;
+        var syntax = opts.syntax;
         var json = {};
         var $elements = this.find(opts.selector);
 
@@ -80,17 +80,17 @@
                     var value = $form.find('input[name="' + name + '"]:checked').val();
 
                     if (!value) {
-                        strategies[strategy](json, delimiter, name, null);
+                        syntaxes[syntax](json, delimiter, name, null);
                         return;
                     }
 
-                    strategies[strategy](json, delimiter, name, value);
+                    syntaxes[syntax](json, delimiter, name, value);
                     return;
                 }
             }
 
             // by default just apply the value
-            strategies[strategy](json, delimiter, name, $element.val());
+            syntaxes[syntax](json, delimiter, name, $element.val());
         });
 
         return json;
@@ -103,7 +103,7 @@
      */
     $.fn.formToObject.defaults = {
         pretty: false,
-        strategy: 'delimited',
+        syntax: 'delimited',
         delimiter: '.',
         selector: 'input[name], select[name], textarea[name]'
     };
