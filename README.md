@@ -65,7 +65,7 @@ jQuery plugin to marshal a form to JSON representation
                 e.preventDefault();
                 var json = $(this).formToJson({
                     pretty: true,
-                    strategy: 'array'
+                    syntax: 'array'
                 });
                 console.log(json);
             });
