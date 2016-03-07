@@ -1,20 +1,63 @@
 (function ($) {
+    /**
+     * Define strategies for syntax parsing here
+     *
+     * @type {{delimited: strategies.delimited, array: strategies.array}}
+     */
+    var strategies = {
+        /**
+         * Example: name="address.street"
+         *
+         * @param json
+         * @param delimiter
+         * @param name
+         * @param value
+         */
+        delimited: function (json, delimiter, name, value) {
+            var pObj;
+            var cpName;
+            $.each(name.split(delimiter), function (i, nameSegment) {
+                pObj = json;
+                cpName = nameSegment;
+                json = json[nameSegment] ? json[nameSegment] : (json[nameSegment] = {});
+            });
+            pObj[cpName] = value;
+        },
 
-    var applyValue = (function (json, delimiter, name, value) {
-        var pObj;
-        var cpName;
-        $.each(name.split(delimiter), function (i, nameSegment) {
-            pObj = json;
-            cpName = nameSegment;
-            json = json[nameSegment] ? json[nameSegment] : (json[nameSegment] = {});
-        });
-        pObj[cpName] = value;
-    });
+        /**
+         * Example: name="form[address][street]"
+         *
+         * @param json
+         * @param delimiter
+         * @param name
+         * @param value
+         */
+        array: function (json, delimiter, name, value) {
+            var name = name.substr(name.indexOf('['));
+            var pObj;
+            var cpName;
+            $.each(name.split(/\[(.+?)\]/), function (i, nameSegment) {
+                if (nameSegment === '') {
+                    return;
+                }
 
+                pObj = json;
+                cpName = nameSegment;
+                json = json[nameSegment] ? json[nameSegment] : (json[nameSegment] = {});
+            });
+            pObj[cpName] = value;
+        }
+    };
+
+    /**
+     * @param options
+     * @returns {{}}
+     */
     $.fn.formToObject = function (options) {
         var $form = this;
         var opts = $.extend({}, $.fn.formToObject.defaults, options);
         var delimiter = opts.delimiter;
+        var strategy = opts.strategy;
         var json = {};
         var $elements = this.find(opts.selector);
 
@@ -37,28 +80,37 @@
                     var value = $form.find('input[name="' + name + '"]:checked').val();
 
                     if (!value) {
-                        applyValue(json, delimiter, name, null);
+                        strategies[strategy](json, delimiter, name, null);
                         return;
                     }
 
-                    applyValue(json, delimiter, name, value);
+                    strategies[strategy](json, delimiter, name, value);
                     return;
                 }
             }
 
             // by default just apply the value
-            applyValue(json, delimiter, name, $element.val());
+            strategies[strategy](json, delimiter, name, $element.val());
         });
 
         return json;
     };
 
+    /**
+     * Defaults are defined here
+     *
+     * @type {{pretty: boolean, strategy: string, delimiter: string, selector: string}}
+     */
     $.fn.formToObject.defaults = {
         pretty: false,
+        strategy: 'delimited',
         delimiter: '.',
         selector: 'input[name], select[name], textarea[name]'
     };
 
+    /**
+     * @param options
+     */
     $.fn.formToJson = function (options) {
         var object = this.formToObject(options);
 
