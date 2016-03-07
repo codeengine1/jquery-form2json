@@ -50,6 +50,8 @@ jQuery plugin to marshal a form to JSON representation
 }
 ```
 
+<a name="symfony-support" />
+
 ### New! Support for Symfony array syntax:
 
 ```html
