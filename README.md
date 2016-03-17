@@ -86,6 +86,9 @@ jQuery plugin to marshal a form to JSON representation
     
         <label for="city">City:</label>
         <input type="text" id="city" name="form[address][city]" value="Newtown"/>
+        
+        <input type="checkbox" id="terms" name="form[legal][terms][id]" value="9" />
+        <label for="terms">I agree that this form is a sample and has no real world value</label>
     
         <input type="submit" value="SUBMIT" />
     </form>
