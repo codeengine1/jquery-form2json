@@ -107,6 +107,11 @@ jQuery plugin to marshal a form to JSON representation
   "address": {
     "street": "123 West Main St.",
     "city": "Newtown"
+  },
+  "legal": {
+    "terms": {
+      "id": "9"
+    }
   }
 }
 ```
