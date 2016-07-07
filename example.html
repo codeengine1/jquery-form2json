@@ -79,6 +79,14 @@
     <label for="city">City:</label>
     <input type="text" id="city" name="address.city" value="Newtown"/>
 
+    <label for="city">Hidden Field:</label>
+    <input style="display: none;" type="text" id="hiddenField" name="hiddenField" value="You can't see me!"/>
+
+    <label for="city">Hidden Select:</label>
+    <select style="display: none;" id="hiddenSelect" name="hiddenSelect">
+        <option value="I'm a hidden option">Hidden Option</option>
+    </select>
+
     <label for="state">State:</label>
     <select id="state" name="address.state">
         <option value="">&nbsp;</option>
@@ -142,6 +150,8 @@
 
     <input type="checkbox" id="terms" name="legal.terms" value="1" />
     <label for="terms">I agree that this form is a sample and has no real world value</label>
+
+    <input type="hidden" name="hiddenInput" value="I should be serialized" />
 
     <input type="submit" value="SUBMIT" />
 
