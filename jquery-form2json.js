@@ -69,11 +69,19 @@
             var $element = $(this);
             var name = $element.attr('name');
 
+            if ($element.is('select') && $element.is(':hidden')) {
+                return;
+            }
+
             if ($element.is('input')) {
                 var type = $element.attr('type');
 
                 if (typeof type === typeof undefined || type === false) {
-                    return false;
+                    return;
+                }
+
+                if (type != 'hidden' && $element.is(':hidden')) {
+                    return;
                 }
 
                 if (type === 'radio' || type === 'checkbox') {
@@ -82,6 +90,16 @@
                     if (!value) {
                         syntaxes[syntax](json, delimiter, name, null);
                         return;
+                    }
+
+                    // "true" or "1" are true
+                    if (value == 'true' || value == '1') {
+                        value = true;
+                    }
+
+                    // "false" or "0" are false
+                    if (value == 'false' || value == '0') {
+                        value = false;
                     }
 
                     syntaxes[syntax](json, delimiter, name, value);
