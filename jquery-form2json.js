@@ -61,7 +61,7 @@
         var json = {};
         var $elements = this.find(opts.selector);
 
-        if ($elements.length <= 1) {
+        if ($elements.length < 1) {
             return json;
         }
 
